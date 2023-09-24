@@ -1,7 +1,10 @@
+import path from "path";
 import {ctrlWrapper} from "../decorators/index.js";
 import {HttpError} from "../helpers/index.js";
 import Contact from "../models/contact.js";
+import fs from "fs/promises"
 
+const avatarPath = path.resolve("public", "avatar")
 export const listContacts = async (req, res) => {
   const {_id: owner} =req.user;
   const {page =1, limit = 10} =req.query;
@@ -21,8 +24,13 @@ export const getById = async (req, res) => {
 };
 
 export const addContact = async (req, res) => {
-  const {_id: owner} =req.user
-  const result = await Contact.create(...req.body, owner);
+  const {_id: owner} =req.user;
+  const {path:oldPath, filename} =req.file;
+const  newPath = path.join(avatarPath, filename)
+  await fs.rename(oldPath, newPath);
+ const poster = path.join( "avatar", filename)
+  await fs.unlink(oldPath)
+ const result = await Contact.create(...req.body, owner);
   res.status(201).json(result);
   
 };
