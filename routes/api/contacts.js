@@ -19,7 +19,7 @@ contactRouter.get("/", ctrlContacts.listContacts)
 
 contactRouter.get("/:contactId", isValidId, ctrlContacts.getById);
 
-contactRouter.post("/", upload.single("avatar"), contactAddValidate, ctrlContacts.addContact);
+contactRouter.post("/", contactAddValidate, ctrlContacts.addContact);
 
 contactRouter.put("/:contactId", isValidId, contactAddValidate, ctrlContacts.updateContact );
 

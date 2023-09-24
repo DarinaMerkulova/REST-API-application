@@ -3,8 +3,11 @@ import { HttpError } from "../helpers/index.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
+import gravatar from "gravatar";
+import Jimp from 'jimp';
 
 const { SECRET_KEY } = process.env;
+
 const signup = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
@@ -14,11 +17,12 @@ const signup = async (req, res) => {
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
-
-  const newUser = await User.create({ ...req.body, password: hashPassword });
+  const avatarURL = gravatar.url(email)
+  const newUser = await User.create({ ...req.body, password: hashPassword, avatarURL });
   res.status(201).json({
     username: newUser.username,
     email: newUser.email,
+    avatarURL
   });
 };
 
@@ -72,10 +76,26 @@ const refresh = async (req, res) => {
   }
 };
 
+const updateAvatar = async (req, res) => {
+  const { _id } = req.user;
+  const { path: tempUpload, originalname } = req.file;
+  const filename = `${Date.now()}-${originalname}`;
+  const resultUpload = path.join(avatarDir, filename);
+
+  const img = await Jimp.read(tempUpload);
+  await resizeFile.resize(250, 250).write(resultUpload)
+  
+  await fs.rename(tempUpload, resultUpload);
+  const avatarURL = path.join('avatars', filename);
+  await User.findByIdAndUpdate(_id, { avatarURL });
+  res.status(200).json({ avatarURL });
+};
+
 export default {
   signup: ctrlWrapper(signup),
   login: ctrlWrapper(login),
   logout: ctrlWrapper(logout),
   getCurrent: ctrlWrapper(getCurrent),
   refresh: ctrlWrapper(refresh),
+  updateAvatar: ctrlWrapper(updateAvatar),
 };

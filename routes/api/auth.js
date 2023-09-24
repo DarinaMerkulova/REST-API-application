@@ -15,4 +15,5 @@ authRouter.post("/login", userLoginSchema, ctrlAuth.login)
 authRouter.get("/current", authenticate, ctrlAuth.getCurrent)
 authRouter.post("/refresh", userRefreshTokenSchema, ctrlAuth.refresh)
 authRouter.post("/logout", authenticate, ctrlAuth.logout)
+authRouter.patch('/avatars', authenticate, upload.single('avatar'), ctrlAuth.updateAvatar)
 export default authRouter
