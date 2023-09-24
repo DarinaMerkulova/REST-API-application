@@ -1,13 +1,14 @@
-import Joi from "joi";
-import { emailRegexp } from "../models/User";
 
-const userSignupSchema = Joi.object({
+import Joi from "joi";
+import { emailRegexp } from "../models/User.js";
+
+export const userSignupSchema = Joi.object({
     username: Joi.string().required(),
     email:Joi.string().pattern(emailRegexp).required(),
     password: Joi.string().min(6).required()
 })
 
- const loginSignupSchema = Joi.object({
+ export const loginSignupSchema = Joi.object({
     email:Joi.string().pattern(emailRegexp).required(),
     password: Joi.string().min(6).required()})
 

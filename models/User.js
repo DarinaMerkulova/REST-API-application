@@ -1,7 +1,7 @@
 import {  Schema, model } from "mongoose";
 import { handleMongooseError, runValidateAtUpdate } from "./hook.js";
 
-import Joi from "joi";
+
 
 export const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 
