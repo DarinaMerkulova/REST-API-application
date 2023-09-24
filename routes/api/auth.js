@@ -2,7 +2,7 @@ import express from "express";
 import userSchema from "../../models/User.js"
 import {validateBody} from "../../decorators/index.js";
 import ctrlAuth from "../../controllers/ctrlAuth.js";
-import {authenticate} from "../../middlewars/index.js";
+import {authenticate, upload} from "../../middlewars/index.js";
 
 const authRouter = express.Router()
 
