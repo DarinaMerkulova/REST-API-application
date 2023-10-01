@@ -13,7 +13,11 @@ export const userSignupSchema = Joi.object({
     password: Joi.string().min(6).required()})
 
 
- const userRefreshTokenSchema = Joi.object({
+ export const userRefreshTokenSchema = Joi.object({
     refreshToken:Joi.string().required(),
  })   
+
+ export const userEmailSchema = Joi.object({
+   email:Joi.string().pattern(emailRegexp).required(),
+ })
     export default { userSignupSchema, loginSignupSchema,userRefreshTokenSchema  };

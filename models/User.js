@@ -23,7 +23,16 @@ const  userSchema = new Schema({
             required:[true, 'Set password for user'],
     },
           accessToken: { type: String,},
-          refreshToken: {type: String,}
+          refreshToken: {type: String,},
+          
+          verify: {
+            type: Boolean,
+            default: false,
+          },
+          verificationToken: {
+            type: String,
+            required: [true, 'Verify token is required'],
+          },
 
   }, { versionKey: false, timestamps: true})
 
