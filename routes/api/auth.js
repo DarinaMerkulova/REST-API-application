@@ -12,7 +12,7 @@ const userRefreshTokenSchema = validateBody(userSchema.userRefreshTokenSchema);
 const userEmailSchema = validateBody(userSchema.userEmailSchema);
 
 authRouter.post("/signup", userSignupSchema, ctrlAuth.signup);
-authRouter.get("/verify/:verificationCode", ctrlAuth.verify);
+authRouter.get("/verify/:verificationToken", ctrlAuth.verify);
 authRouter.post("/verify", userEmailSchema, ctrlAuth.resendEmail);
 authRouter.post("/login", userLoginSchema, ctrlAuth.login);
 authRouter.get("/current", authenticate, ctrlAuth.getCurrent);

@@ -20,4 +20,4 @@ export const userSignupSchema = Joi.object({
  export const userEmailSchema = Joi.object({
    email:Joi.string().pattern(emailRegexp).required(),
  })
-    export default { userSignupSchema, loginSignupSchema,userRefreshTokenSchema  };
+    export default { userSignupSchema, loginSignupSchema,userRefreshTokenSchema, userEmailSchema };
